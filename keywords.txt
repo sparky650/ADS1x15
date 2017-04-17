@@ -1,0 +1,17 @@
+# Syntax Coloring Map For ADS1x15
+
+ADS1115					KEYWORD1
+ADS1015					KEYWORD1
+
+attachTimeoutHandler	KEYWORD2
+attachErrorHandler		KEYWORD2
+getTimeoutFlag			KEYWORD2	
+writeRegisters			KEYWORD2
+writeRegisters			KEYWORD2
+readRegisters			KEYWORD2
+setRegisterBit			KEYWORD2
+
+analogRead				KEYWORD2
+analogReadVoltage		KEYWORD2
+analogReadCurrent		KEYWORD2
+setDataRate				KEYWORD2
