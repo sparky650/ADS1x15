@@ -126,7 +126,6 @@ public:
 		timeoutFlag = false;
 		calibration = 1.0;
 		configRegister = defaultConfig;
-		setGain(GAIN_2);
 	}
 	void begin() {begin(defaultAddress);}
 	inline uint8_t addressIndex(uint8_t a) {return a + defaultAddress;}
