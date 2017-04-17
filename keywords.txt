@@ -11,7 +11,19 @@ writeRegisters			KEYWORD2
 readRegisters			KEYWORD2
 setRegisterBit			KEYWORD2
 
-analogRead				KEYWORD2
+begin					KEYWORD2
+addressIndex			KEYWORD2
+setCalibration			KEYWORD2
+setCalibration			KEYWORD2
+setGain					KEYWORD2
+getFullScaleV			KEYWORD2
+setComparatorMode		KEYWORD2
+setComparatorPolarity	KEYWORD2
+setComparatorLatch		KEYWORD2
+analogRead 				KEYWORD2
 analogReadVoltage		KEYWORD2
 analogReadCurrent		KEYWORD2
-setDataRate				KEYWORD2
+analogRead420			KEYWORD2
+getCalibration			KEYWORD2
+getADCbits				KEYWORD2
+getFullScaleBits		KEYWORD2
