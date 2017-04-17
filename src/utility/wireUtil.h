@@ -157,11 +157,11 @@ DATATYPE wireUtil<REGTYPE, DATATYPE>::readRegister(REGTYPE reg)
 	Wire.beginTransmission(address);
 	Wire.write((uint8_t)reg);
 	Wire.endTransmission(false);
-	Wire.requestFrom(address, (uint8_t) sizeof(DATATYPE));
+	Wire.requestFrom(address, (uint8_t)sizeof(DATATYPE));
 
 	timeoutFlag = false;
 	abortTime = millis() + timeoutTime;
-	while (!Wire.available())
+	while (Wire.available() < (int8_t)sizeof(DATATYPE))
 	{
 		if (abortTime < millis())
 		{
