@@ -1,7 +1,7 @@
 /**
  * @file	wireUtil.h
  * @author	Keegan Morrow
- * @version	1.1.0
+ * @version	1.1.2
  * @brief Utility base class for reading and writing registers on i2c devices
  *
  */
@@ -16,7 +16,7 @@
  * @brief Utility base class for reading and writing registers on i2c devices
  *
  * @tparam REGTYPE An initialized enum type that lists the valid registers for the device
- * @tparam DATATYPE = uint8_t Data type (register size)
+ * @tparam DATATYPE = uint8_t Data type (register size) supports uint8_t, uint16_t, uint32_t
  */
 template <typename REGTYPE, typename DATATYPE = uint8_t>
 class wireUtil
@@ -233,6 +233,11 @@ bool wireUtil<REGTYPE, DATATYPE>::setRegisterBit(REGTYPE reg, uint8_t bit, bool 
 	return writeRegister(reg, tempReg);
 }
 
+/**
+ * @brief Assembles and writes a big endian packet
+ *
+ * @param d Unit of data to be written
+ */
 template <typename REGTYPE, typename DATATYPE>
 void wireUtil<REGTYPE, DATATYPE>::writeAsBytes(DATATYPE d)
 {
@@ -255,29 +260,38 @@ void wireUtil<REGTYPE, DATATYPE>::writeAsBytes(DATATYPE d)
 	case 1:
 		buffer[0] = d;
 		break;
+	default:
+		memset(buffer, 0x00, sizeof(DATATYPE));
 	}
 	Wire.write(buffer, sizeof(DATATYPE));
 }
 
+/**
+ * @brief Receives a big endian packet and converts to a data unit
+ *
+ * @return The re-assembled data unit
+ */
 template <typename REGTYPE, typename DATATYPE>
 DATATYPE wireUtil<REGTYPE, DATATYPE>::readAsBytes()
 {
-	DATATYPE d = 0;
+	DATATYPE d;
 	switch (sizeof(DATATYPE))
 	{
 	case 4:
-		d |= (uint32_t)Wire.read() << 24;
+		d = (uint32_t)Wire.read() << 24;
 		d |= (uint32_t)Wire.read() << 16;
 		d |= (uint32_t)Wire.read() << 8;
 		d |= (uint32_t)Wire.read();
 		break;
 	case 2:
-		d |= (uint16_t)Wire.read() << 8;
+		d = (uint16_t)Wire.read() << 8;
 		d |= (uint16_t)Wire.read();
 		break;
 	case 1:
-		d |= (uint8_t)Wire.read();
+		d = (uint8_t)Wire.read();
 		break;
+	default:
+		d = 0;
 	}
 	return d;
 }
