@@ -86,7 +86,7 @@ void ADS1x15::setComparatorLatch(ADS1x15_COMP_LAT_t compCfg)
 /**
  * @brief Read an analog value
  *
- * @param m The configuration of the MUX
+ * @param mux The configuration of the MUX
  * @return The converted value
  */
 int16_t ADS1x15::analogRead(ADS1x15_MUX_t mux)
