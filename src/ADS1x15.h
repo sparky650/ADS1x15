@@ -2,7 +2,7 @@
  * @file ADS1115.h
  * @author Keegan Morrow
  * @version 0.0.2
- *
+ * @brief Classes for the ADS1015 and ADS1115 analog to digital converters
  */
 
 #ifndef __ADS1x15_h_
