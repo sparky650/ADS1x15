@@ -1,7 +1,7 @@
 /**
  * @file ADS1115.h
  * @author Keegan Morrow
- * @version 0.0.2
+ * @version 0.0.3
  * @brief Classes for the ADS1015 and ADS1115 analog to digital converters
  */
 
@@ -109,9 +109,9 @@ enum ADS1x15_QUE_t
 typedef ADS1x15_GAIN_t ADS1015_GAIN_t;
 typedef ADS1x15_GAIN_t ADS1115_GAIN_t;
 
-static const uint16_t defaultConfig = 0x8583; // default startup state (from the datasheet)
+static const uint16_t ADS1x15_defaultConfig = 0x8583; // default startup state (from the datasheet)
 
-static const uint8_t defaultAddress = 0x48;
+static const uint8_t ADS1x15_defaultAddress = 0x48;
 
 /**
  * @brief Foundation class for the ADS1015 and ADS1115 ADCs
@@ -124,16 +124,29 @@ public:
 	{
 		timeoutTime = 1000UL;
 		timeoutFlag = false;
-		calibration = 1.0;
-		configRegister = defaultConfig;
+		calibration[0] = 1.0;
+		calibration[1] = 1.0;
+		calibration[2] = 1.0;
+		calibration[3] = 1.0;
+		configRegister = ADS1x15_defaultConfig;
 		currentGain = GAIN_2; // this needs to match the defaultConfig configuration
 	}
-	void begin() {begin(defaultAddress);}
-	inline uint8_t addressIndex(uint8_t a) {return a + defaultAddress;}
+	/**
+	 * @brief Initialize the chip at the default address
+	 */
+	void begin() {begin(ADS1x15_defaultAddress);}
+	/**
+	 * @brief Get the hardware address from the logical address of the chip
+	 *
+	 * @param a Logical address of the chip
+	 * @return Hardware address of the chip
+	 */
+	inline uint8_t addressIndex(uint8_t a) {return a + ADS1x15_defaultAddress;}
 	void setCalibration(float);
-	void setCalibration(float, float);
+	void setCalibration(uint8_t, float);
+	float resistorDivider(float, float);
 	void setGain(ADS1x15_GAIN_t);
-	float getFullScaleV();
+	float getFullScaleV(uint8_t);
 	void setComparatorMode(ADS1x15_COMP_MODE_t);
 	void setComparatorPolarity(ADS1x15_COMP_POL_t);
 	void setComparatorLatch(ADS1x15_COMP_LAT_t);
@@ -142,7 +155,13 @@ public:
 	float analogReadVoltage(uint8_t);
 	float analogReadCurrent(uint8_t, float = 100.0);
 	float analogRead420(uint8_t, float = 100.0);
-	inline float getCalibration() {return calibration;}
+	/**
+	 * @brief Get the current calibration factor
+	 *
+	 * @param ch Channel to get
+	 * @return Correction factor
+	 */
+	inline float getCalibration(uint8_t ch) {return calibration[ch % 4];}
 	virtual uint8_t getADCbits() {return 0;}
 	virtual uint16_t getFullScaleBits() {return 0;}
 
@@ -150,7 +169,7 @@ protected:
 	uint16_t configRegister;
 	ADS1x15_GAIN_t currentGain;
 	uint32_t conversionDelay;
-	float calibration;
+	float calibration[4];
 	virtual inline uint16_t shiftConversion(uint16_t c) {return c;}
 };
 

@@ -14,7 +14,7 @@ setRegisterBit			KEYWORD2
 begin					KEYWORD2
 addressIndex			KEYWORD2
 setCalibration			KEYWORD2
-setCalibration			KEYWORD2
+resistorDivider			KEYWORD2
 setGain					KEYWORD2
 getFullScaleV			KEYWORD2
 setComparatorMode		KEYWORD2

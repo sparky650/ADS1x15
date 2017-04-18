@@ -7,18 +7,34 @@
  */
 void ADS1x15::setCalibration(float calibration)
 {
-	this->calibration = calibration;
+	this->calibration[0] = calibration;
+	this->calibration[1] = calibration;
+	this->calibration[2] = calibration;
+	this->calibration[3] = calibration;
 }
 
 /**
- * @brief Calculate the calibration factor for calculating the voltage or current input
+ * @brief Set the calibration factor for an individual input for calculating the voltage or current input
  *
- * @param r1 First resistor in the resistor divider
- * @param r2 Second resistor in the resistor divider
+ * @param ch Channel to set
+ * @param calibration Correction factor
  */
-void ADS1x15::setCalibration(float r1, float r2)
+void ADS1x15::setCalibration(uint8_t ch, float calibration)
 {
-	if (r2 > 0.0) { calibration = (r1 + r2) / r2; }
+	this->calibration[ch % 4] = calibration;
+}
+
+/**
+ * @brief Calculate the correction factor for a resistor divider
+ *
+ * @param r1 R1 value in ohms
+ * @param r2 R2 value in ohms
+ *
+ * @return Calculated correction factor
+ */
+float ADS1x15::resistorDivider(float r1, float r2)
+{
+	if (r2 > 0.0) { return (r1 + r2) / r2; }
 }
 
 /**
@@ -38,7 +54,7 @@ void ADS1x15::setGain(ADS1x15_GAIN_t currentGain)
  *
  * @return Voltage based on the current gain and calibration factor
  */
-float ADS1x15::getFullScaleV()
+float ADS1x15::getFullScaleV(uint8_t ch)
 {
 	float value = 0.0;
 	if (currentGain == GAIN_23) {value = 6.144;}
@@ -47,7 +63,7 @@ float ADS1x15::getFullScaleV()
 	else if (currentGain == GAIN_4) {value = 1.024;}
 	else if (currentGain == GAIN_8) {value = 0.512;}
 	else if (currentGain == GAIN_16) {value = 0.256;}
-	return value * calibration;
+	return value * calibration[ch % 4];
 }
 
 /**
@@ -125,8 +141,7 @@ uint16_t ADS1x15::analogRead(uint8_t ch)
  */
 float ADS1x15::analogReadVoltage(uint8_t ch)
 {
-	return getFullScaleV() * ((float)analogRead(ch) / (float)getFullScaleBits());
-	// return ((float)analogRead(ch) / (float)getFullScaleBits());
+	return getFullScaleV(ch) * ((float)analogRead(ch) / (float)getFullScaleBits());
 }
 
 /**
@@ -140,7 +155,7 @@ float ADS1x15::analogReadVoltage(uint8_t ch)
  */
 float ADS1x15::analogReadCurrent(uint8_t ch, float r)
 {
-	if (r > 0.0) { return analogReadVoltage(ch) / r; }
+	if (r > 0.0) { return (analogReadVoltage(ch) * 1000.0) / r; }
 	else { return 0.0; }
 }
 
