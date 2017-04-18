@@ -143,8 +143,8 @@ public:
 	float analogReadCurrent(uint8_t, float = 100.0);
 	float analogRead420(uint8_t, float = 100.0);
 	inline float getCalibration() {return calibration;}
-	virtual uint8_t getADCbits();
-	virtual uint16_t getFullScaleBits();
+	virtual uint8_t getADCbits() {return 0;}
+	virtual uint16_t getFullScaleBits() {return 0;}
 
 protected:
 	uint16_t configRegister;
