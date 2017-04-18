@@ -16,7 +16,7 @@
  * @brief Utility base class for reading and writing registers on i2c devices
  *
  * @tparam REGTYPE An initialized enum type that lists the valid registers for the device
- * @tparam DATATYPE = uint8_t Data type (register size) supports uint8_t, uint16_t, uint32_t
+ * @tparam DATATYPE Data type (register size) supports uint8_t, uint16_t, uint32_t
  */
 template <typename REGTYPE, typename DATATYPE = uint8_t>
 class wireUtil
@@ -44,7 +44,9 @@ public:
 	 * @return State of the timeout flag
 	 */
 	inline bool getTimeoutFlag() {return timeoutFlag;}
-
+	/**
+	 * @brief Initialize the chip at the default address (must be defined later)
+	 */
 	virtual void begin();
 	virtual void begin(uint8_t);
 #if defined(ARDUINO_ARCH_ESP8266)
