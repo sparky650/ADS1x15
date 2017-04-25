@@ -35,6 +35,7 @@ void ADS1x15::setCalibration(uint8_t ch, float calibration)
 float ADS1x15::resistorDivider(float r1, float r2)
 {
 	if (r2 > 0.0) { return (r1 + r2) / r2; }
+	else { return 0.0; }
 }
 
 /**
