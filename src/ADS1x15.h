@@ -1,7 +1,7 @@
 /**
  * @file ADS1115.h
  * @author Keegan Morrow
- * @version 0.0.3
+ * @version 0.0.4
  * @brief Classes for the ADS1015 and ADS1115 analog to digital converters
  */
 
@@ -10,7 +10,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include "utility/wireUtil.h"
+#include <wireUtil.h>
 
 enum ADS1x15_Register_t
 {
