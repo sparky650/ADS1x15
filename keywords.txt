@@ -1,21 +1,21 @@
 # Syntax Coloring Map For ADS1x15
 
-ADS1115 KEYWORD1
-ADS1015 KEYWORD1
+ADS1115	KEYWORD1
+ADS1015	KEYWORD1
 
-begin KEYWORD2
-addressIndex KEYWORD2
-setCalibration KEYWORD2
-resistorDivider KEYWORD2
-setGain KEYWORD2
-getFullScaleV KEYWORD2
-setComparatorMode KEYWORD2
-setComparatorPolarity KEYWORD2
-setComparatorLatch KEYWORD2
-analogRead KEYWORD2
-analogReadVoltage KEYWORD2
-analogReadCurrent KEYWORD2
-analogRead420 KEYWORD2
-getCalibration KEYWORD2
-getADCbits KEYWORD2
-getFullScaleBits KEYWORD2
+begin	KEYWORD2
+addressIndex	KEYWORD2
+setCalibration	KEYWORD2
+resistorDivider	KEYWORD2
+setGain	KEYWORD2
+getFullScaleV	KEYWORD2
+setComparatorMode	KEYWORD2
+setComparatorPolarity	KEYWORD2
+setComparatorLatch	KEYWORD2
+analogRead	KEYWORD2
+analogReadVoltage	KEYWORD2
+analogReadCurrent	KEYWORD2
+analogRead420	KEYWORD2
+getCalibration	KEYWORD2
+getADCbits	KEYWORD2
+getFullScaleBits	KEYWORD2
